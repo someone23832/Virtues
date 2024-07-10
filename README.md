@@ -7,4 +7,4 @@ It has something similar to a hidden questline to find a legendary.
 
 Haven't looked at any compatibility for other mods, but I think it's kept good practice and doesn't do anything insane, so it shouldn't cause too many issues.
 
-Requires the Steamodded 1.0.0 Alpha.
+## Requires the Steamodded 1.0.0 Alpha.
