@@ -8,6 +8,7 @@
 --- PREFIX: sins
 ----------------------------------------------
 ------------MOD CODE -------------------------
+
 local Sounds = 2
 if Sounds == 1 then
   SMODS.Sound{key = "Lust", path = "Lust1.ogg"}
@@ -39,7 +40,7 @@ SMODS.Joker{
 			"{C:inactive}(Currently {C:chips}+#2# {C:inactive}Chips)"
     }
   },
-  config = {extra = {chips_add = 15, chips = 0, broken = false}},
+  config = {extra = {chips_add = 13, chips = 0, broken = false}},
   no_pool_flag = "obedience_rebelled",
   rarity = 1,
   atlas = 'virtues',
@@ -50,6 +51,7 @@ SMODS.Joker{
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.chips_add, center.ability.extra.chips}}
   end,
+
  calculate = function(self, card, context)
     -- Upgrades the joker if Spades are in hand at the end of the round.
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
@@ -57,6 +59,8 @@ SMODS.Joker{
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_add
         G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgrade", colour = G.C.CHIPS, instant = true})
             play_sound('chips2')
           return true; end}))
         if not G.GAME.virtue_values then
@@ -71,7 +75,7 @@ SMODS.Joker{
       if card.ability.extra.chips > 0 then
         return {
           message = localize{type = 'variable', key = 'a_chips', vars = {card.ability.extra.chips}},
-          chips_mod = card.ability.extra.chips
+          chip_mod = card.ability.extra.chips
         }
       end
     end
@@ -158,10 +162,12 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Hearts') then 
         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.MULT, instant = true})
             play_sound('chips2')
-          return true end}))
+          return true; end}))
         if not G.GAME.virtue_values then
           G.GAME.virtue_values = {}
         end
@@ -171,7 +177,7 @@ SMODS.Joker{
     
   -- Multiply value by multiplier value.
     if context.cardarea == G.jokers and context.joker_main then
-      if card.ability.extra.mult > 1 then
+      if card.ability.extra.Xmult > 1 then
         return {
           message = localize{type = 'variable', key = 'a_xmult', vars = {card.ability.extra.Xmult}},
           Xmult_mod = card.ability.extra.Xmult
@@ -262,8 +268,10 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Clubs') then 
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.MULT, instant = true})
             play_sound('chips2')
           return true; end}))
         if not G.GAME.virtue_values then
@@ -368,8 +376,10 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Diamonds') then 
         card.ability.extra.money = card.ability.extra.money + card.ability.extra.money_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.GOLD, instant = true})
             play_sound('chips2')
           return true; end}))
         if not G.GAME.virtue_values then
@@ -504,10 +514,12 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Spades') then 
         card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.chips_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.CHIPS, instant = true})
             play_sound('chips2')
-          return true; end})) 
+          return true; end}))
       end
     end
     
@@ -563,10 +575,12 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Hearts') then 
         card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.Xmult_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.MULT, instant = true})
             play_sound('chips2')
-          return true; end})) 
+          return true; end}))
       end
     end
     
@@ -622,10 +636,12 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Clubs') then 
         card.ability.extra.mult = card.ability.extra.mult + card.ability.extra.mult_add
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.MULT, instant = true})
             play_sound('chips2')
-          return true; end})) 
+          return true; end}))
       end
     end
     
@@ -682,10 +698,12 @@ SMODS.Joker{
     if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
       if context.other_card:is_suit('Diamonds') then 
         card.ability.extra.moneyend = card.ability.extra.moneyend + card.ability.extra.moneygain
-        G.E_MANAGER:add_event(Event({
+     G.E_MANAGER:add_event(Event({
           func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Upgraded", colour = G.C.GOLD, instant = true})
             play_sound('chips2')
-          return true; end})) 
+          return true; end}))
       end
     end
     
@@ -719,42 +737,82 @@ SMODS.Joker{
   loc_txt = {
     name = '{C:dark_edition}Decadence',
     text = {
-      "{s:0.8,C:dark_edition}Naturally Negative",
+      --"{s:0.8,C:dark_edition}Naturally Negative",
+      "{C:attention}+1{} Joker Slot",
       "{C:attention}+#1#{} Hand Size",
       "Retriggers {V:1}#2#",
-      "{C:inactive}Changes {C:attention}suits {C:inactive}at end of round",
-      "{C:purple}Fallen {C:inactive}Jokers can be found"
-    }
+      "{C:inactive}Changes {C:attention}suits {C:inactive}at end of round"
+    },
+    unlock = {"I wonder what that", "laughter is about..."}
   },
-  config = {extra = {h_size = 2, suit_rep = 1, cur_suit = "Spades"}},
+  config = {extra = {h_size = 2, suit_rep = 1, cur_suit = "Spades", suit_num = 1,
+    suit_order = {"Spades","Hearts","Clubs","Diamonds"}
+    }},
   -- Can only spawn through special means.
   yes_pool_flag = "fallen_impossible",
-  rarity = 4,
+  rarity = 3,
   atlas = 'virtues',
-  pos = {x = 5, y = 0},
-  soul_pos = {x = 5, y = 1},
+  pos = {x = 0, y = 2},
   cost = 20,
   perishable_compat = false,
   eternal_compat = false,
+  unlocked = false,
+  check_for_unlock = function(self, args)
+    if args.type == 'modify_jokers' and G.jokers then
+      for k, v in pairs(G.jokers.cards) do
+        if v.ability.name == "j_sins_decadence" then
+          unlock_card(self)
+        end
+      end
+    end
+  end,
   loc_vars = function(self, info_queue, center)
     return {vars = {center.ability.extra.h_size, center.ability.extra.cur_suit, colours = {G.C.SUITS[center.ability.extra.cur_suit]}}}
   end,
   add_to_deck = function(self, card, from_debuff)
     G.hand:change_size(card.ability.extra.h_size)
+		G.jokers.config.card_limit = G.jokers.config.card_limit + 1
   -- Give starting suit.
-    local SChange = pseudorandom('decadence')
-      if SChange >=0.75 then 
-        card.ability.extra.cur_suit = 'Spades'
-      elseif SChange >=0.5 then 
-        card.ability.extra.cur_suit = 'Hearts'
-      elseif SChange >=0.25 then 
-        card.ability.extra.cur_suit = 'Clubs'
-      else 
-        card.ability.extra.cur_suit = 'Diamonds'
-      end
+    if not from_debuff then
+      local suits = card.ability.extra.suit_order
+      pseudoshuffle(suits,pseudoseed('decadence'))
+      card.ability.extra.suit_order = suits
+      card.ability.extra.cur_suit = card.ability.extra.suit_order[4]
+      
+       G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
+                    attention_text({
+                        text = 'The Fallen have ben released.',
+                        scale = 0.7, 
+                        hold = 8*G.SETTINGS.GAMESPEED,
+                        major = G.play,
+                        backdrop_colour = G.C.CLEAR,
+                        align = 'cm',
+                        offset = {x = 0, y = -3.5},
+                        silent = true
+                    })
+                    return true 
+                    end 
+                }))
+    end
+  end,
+  update = function(self, card, card_table, other_card)
+    local suitpos = {y=2}
+    if not card.config.center.unlocked then
+      suitpos = {x = 8, y = 9}
+    elseif card.ability.extra.cur_suit == "Spades" then
+      suitpos.x = 0
+    elseif card.ability.extra.cur_suit == "Hearts" then
+      suitpos.x = 1
+    elseif card.ability.extra.cur_suit == "Clubs" then
+      suitpos.x = 2
+    elseif card.ability.extra.cur_suit == "Diamonds" then
+      suitpos.x = 3
+    end
+    card.children.center:set_sprite_pos(suitpos)
   end,
   remove_from_deck = function(self, card, from_debuff)
     G.hand:change_size(-card.ability.extra.h_size)
+		G.jokers.config.card_limit = G.jokers.config.card_limit - 1
   end,
  calculate = function(self, card, context)
 --    Applies Repetition
@@ -764,22 +822,25 @@ SMODS.Joker{
         return {
           message = 'Sinful!',
           repetitions = card.ability.extra.suit_rep,
-          card = card
+          card = context.other_card
         }
       end
     end
+
 --    Changes Suit
-    if context.end_of_round and context.cardarea == G.hand and context.card_effects == effects and not context.blueprint then
-      local SChange = pseudorandom('decadence')
-      if SChange >=0.75 then 
-        card.ability.extra.cur_suit = 'Spades'
-      elseif SChange >=0.5 then 
-        card.ability.extra.cur_suit = 'Hearts'
-      elseif SChange >=0.25 then 
-        card.ability.extra.cur_suit = 'Clubs'
-      else 
-        card.ability.extra.cur_suit = 'Diamonds'
-      end
+    if context.end_of_round and context.game_over == false and not context.blueprint then
+      card:flip()
+     G.E_MANAGER:add_event(Event({
+          func = function()
+            card:juice_up(0.7)
+            card_eval_status_text(card,'extra',nil, nil, nil,{message = "Changing...", colour = G.C.PURPLE, instant = true})
+            play_sound('cardFan2')
+          return true; end}))
+      card.ability.extra.cur_suit = card.ability.extra.suit_order[card.ability.extra.suit_num]
+      card.ability.extra.suit_num = card.ability.extra.suit_num+1
+      if card.ability.extra.suit_num == 5 then card.ability.extra.suit_num = 1 end
+      --card:flip()
+      
     end
   end,
   set_card_type_badge = function(self, card, badges)
