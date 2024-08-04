@@ -781,7 +781,7 @@ SMODS.Joker{
       
        G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.4, func = function()
                     attention_text({
-                        text = 'The Fallen have ben released.',
+                        text = 'The Fallen have been released.',
                         scale = 0.7, 
                         hold = 8*G.SETTINGS.GAMESPEED,
                         major = G.play,
